@@ -8,28 +8,15 @@ let contents = [
   ["0", "/", ".", "="],
   ["2"],
 ];
-let inverse = [
-  "*",
-  "9",
-  "8",
-  "7",
-  "-",
-  "6",
-  "5",
-  "4",
-  "+",
-  "3",
-  "2",
-  "1",
-  "=",
-  ".",
-  "/",
-  "0",
-];
+let s = "";
+let number = "";
+radius = 6;
+
 let buttons = [];
 let w = 65;
 let h = w + 1;
 let x, y;
+let mainColor = "rgba(56, 67, 81, 1)";
 class Button {
   constructor(x, y, w, h, content) {
     this.x = x;
@@ -39,29 +26,32 @@ class Button {
     this.content = content;
   }
   draw(i) {
-    // fill("rgba(56, 67, 81, 0.8)");
-    // stroke("rgba(55, 65, 81, 0.2)");
-    fill(56, 67, 81);
+    fill(mainColor);
     stroke(55, 65, 81);
     strokeWeight(2);
+
+    // r For border radius
     let r1,
       r2,
       r3 = 0;
-
-    if (i == 12) {
+    if (i == 3) {
       r1 = 0;
-      r2 = 6;
-    } else if (i == 16) {
-      r1 = 6;
+      r2 = radius;
+    } else if (i == 0) {
+      r1 = radius;
       r2 = 0;
-      r3 = 6;
+      r3 = radius;
+    } else if (i == 16) {
+      r1 = 0;
+      r2 = 10;
+      r3 = 10;
     }
-    rect(this.x, this.y, this.w, this.h, 0, r3, r1, r2);
+    rect(this.x, this.y, this.w, this.h, r1, r2, r3, 0);
 
+    //Text inside each button
     fill(255, 255, 255);
     textSize(32);
     textAlign(CENTER);
-
     text(this.content, this.x + this.w / 2, this.y + this.h / 1.5);
   }
 }
@@ -84,16 +74,20 @@ function setup() {
   // Hide the video element, and just show the canvas
   //video.hide();
 
+  // Ceating buttons from contents content
   for (i = 0; i <= 3; i++) {
     for (j = 0; j <= 3; j++) {
       x = width / 3 + j * w;
-      y = (i + 1) * h;
+      // y = (i + 1) * h;
+      y = i * h;
       let btn = new Button(x, y, w, h, contents[i][j]);
       buttons.push(btn);
     }
   }
+
+  //Creating the delete button
   x = width / 3 + 4 * w;
-  y = (3 + 1) * h;
+  y = (2 + 1) * h;
   btn = new Button(x, y, w, h, "d");
   buttons.push(btn);
 }
@@ -104,22 +98,26 @@ function modelReady() {
 
 function draw() {
   push();
+
+  // Flip the video
   translate(video.width, 0);
   scale(-1, 1);
   //const flippedVideo = ml5.flipImage(video);
+
+  // Putting the video into the canvas
   image(video, 0, 0, width, height);
   pop();
+
   // We can call both functions to draw all keypoints and the skeletons
-  fill(56, 67, 81);
-  rect(width / 3, 0, w * 4, h, 6, 6, 0, 0);
+  fill(mainColor);
+  rect(width / 3, 4 * h, w * 4, h, 0, 0, radius, radius);
   buttons.forEach((btn, i) => {
     btn.draw(i);
   });
 
   drawKeypoints();
 }
-let s = "";
-let number = "";
+
 // A function to draw ellipses over the detected keypoints
 function drawKeypoints() {
   for (let i = 0; i < predictions.length; i += 1) {
@@ -149,7 +147,7 @@ function drawKeypoints() {
         s = "";
       } else {
         s = s + number;
-        text(s, width / 3 + w / 2, h / 1.5);
+        text(s, width / 2 + w / 2, h * 4.5);
         number = "";
       }
     }
