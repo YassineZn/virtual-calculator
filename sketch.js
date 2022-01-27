@@ -57,7 +57,8 @@ class Button {
 }
 
 function setup() {
-  createCanvas(640, 480);
+  let canv = createCanvas(640, 480);
+  canv.parent("canvas-container");
   video = createCapture(VIDEO);
   video.size(width, height);
   const options = {
@@ -72,7 +73,7 @@ function setup() {
   });
 
   // Hide the video element, and just show the canvas
-  //video.hide();
+  video.hide();
 
   // Ceating buttons from contents content
   for (i = 0; i <= 3; i++) {
