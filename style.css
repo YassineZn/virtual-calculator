@@ -16,7 +16,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem;
+  padding: 1.2rem;
   color: white;
   letter-spacing: 0.3rem;
 }
@@ -36,6 +36,7 @@ p {
   transform: translate(-50%, -50%);
   opacity: 0.01;
   letter-spacing: 0.8rem;
+  white-space: nowrap;
 }
 #container {
   position: relative;
