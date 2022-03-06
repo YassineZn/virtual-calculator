@@ -18,15 +18,16 @@ let h = w + 1;
 let x, y;
 let mainColor = "rgba(56, 67, 81, 1)";
 class Button {
-  constructor(x, y, w, h, content) {
+  constructor(x, y, w, h, content, color = mainColor) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
     this.content = content;
+    this.color = color;
   }
   draw(i) {
-    fill(mainColor);
+    fill(this.color);
     stroke(55, 65, 81);
     strokeWeight(2);
 
@@ -89,7 +90,7 @@ function setup() {
   //Creating the delete button
   x = width / 3 + 4 * w;
   y = (2 + 1) * h;
-  btn = new Button(x, y, w, h, "d");
+  btn = new Button(x, y, w, h * 2, "C", "#fa004d");
   buttons.push(btn);
 }
 
